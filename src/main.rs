@@ -12,7 +12,7 @@ use ratatui::{
     widgets::{Block, Borders},
     Terminal,
 };
-use std::{env, io, time::Duration};
+use std::{env, io, println, time::Duration};
 
 use structs::Timer;
 
@@ -55,7 +55,7 @@ fn draw_timer(timer: &mut Timer) -> Result<(), io::Error> {
             let timer_width;
 
             if !timer.is_paused() {
-                timer_width = (inner_area.width as f32 * timer.get_percent()).round() as u16;
+                timer_width = (inner_area.width as f64 * timer.get_percent()) as u16;
                 timer_area = Rect::new(inner_area.x, inner_area.y, timer_width, inner_area.height);
 
                 last_timer_w = timer_width;
