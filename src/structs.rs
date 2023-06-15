@@ -62,15 +62,30 @@ impl<'a> Timer<'a> {
     }
 
     pub fn get_passed_time(&self) -> String {
-        format!(
-            "{:02}:{:02}",
-            (self.tick.elapsed().as_secs() / 60),
-            self.tick.elapsed().as_secs() % 60
-        )
+        let elapsed_time = self.tick.elapsed().as_secs();
+        if elapsed_time / 3600 >= 1 {
+            format!(
+                "{:02}:{:02}:{:02}",
+                elapsed_time / 3600,
+                (elapsed_time % 3600) / 60,
+                elapsed_time % 60
+            )
+        } else {
+            format!("{:02}:{:02}", elapsed_time / 60, elapsed_time % 60)
+        }
     }
 
     pub fn get_remaining_time(&self) -> String {
         let remaining_time = self.seconds_til_end - self.tick.elapsed().as_secs();
-        format!("{:02}:{:02}", remaining_time / 60, remaining_time % 60,)
+        if remaining_time / 3600 >= 1 {
+            format!(
+                "{:02}:{:02}:{:02}",
+                remaining_time / 3600,
+                (remaining_time % 3600) / 60,
+                remaining_time % 60
+            )
+        } else {
+            format!("{:02}:{:02}", remaining_time / 60, remaining_time % 60)
+        }
     }
 }
